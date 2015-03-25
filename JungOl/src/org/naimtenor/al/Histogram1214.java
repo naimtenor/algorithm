@@ -39,23 +39,19 @@ public class Histogram1214 {
 		int max = 0;
 		long maxArea = 0L;
 		
-		int count = 0;
 		for(int i = 0 ; i < size ; i++) {
 			int value = scanner.nextInt();
 			max = max > value ? max : value;
 			for (int j = 1 ; j <= max ; j++) {
 				if (j <= value) {
 					heightsMap.put(j, heightsMap.containsKey(j) ? heightsMap.get(j) + 1 : 1);
+					maxArea = maxArea > heightsMap.get(j) * j ? maxArea : heightsMap.get(j) * j;
 				} else {
 					maxArea = maxArea > heightsMap.get(j) * j ? maxArea : heightsMap.get(j) * j;
 					heightsMap.put(j, 0);
 				}
-				
-				count++;
 			}
 		}
-		
-		System.out.println(count);
 		System.out.println(maxArea);
 		
 		scanner.close();
