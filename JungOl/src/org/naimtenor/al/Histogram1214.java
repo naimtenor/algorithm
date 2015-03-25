@@ -1,7 +1,5 @@
 package org.naimtenor.al;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Scanner;
 
 /**
@@ -34,24 +32,33 @@ public class Histogram1214 {
 	public static void main(String[] args) {
 		Scanner scanner = new Scanner(System.in);
 		int size = scanner.nextInt();
-		Map<Integer, Integer> heightsMap = new HashMap<Integer, Integer>();
 		
-		int max = 0;
+		int[] heights = new int[size];
+		
+		for (int i = 0; i < size; i++) {
+			heights[i] = scanner.nextInt();
+		}
+		
 		long maxArea = 0L;
+		long tempMaxArea = 0L;
+		boolean init = true;
 		
-		for(int i = 0 ; i < size ; i++) {
-			int value = scanner.nextInt();
-			max = max > value ? max : value;
-			for (int j = 1 ; j <= max ; j++) {
-				if (j <= value) {
-					heightsMap.put(j, heightsMap.containsKey(j) ? heightsMap.get(j) + 1 : 1);
-					maxArea = maxArea > heightsMap.get(j) * j ? maxArea : heightsMap.get(j) * j;
+		for (int i = 0; i < size; i++) {
+			if (init) {
+				maxArea = maxArea < heights[i] ? heights[i] : maxArea;
+				tempMaxArea = heights[i];
+				init = false;
+			} else {
+				if (heights[i - 1] > heights[i]) {
+					maxArea = maxArea < tempMaxArea ? tempMaxArea : maxArea;
+					init = true;
+					tempMaxArea = 0L;
 				} else {
-					maxArea = maxArea > heightsMap.get(j) * j ? maxArea : heightsMap.get(j) * j;
-					heightsMap.put(j, 0);
+					tempMaxArea += heights[i - 1];
 				}
 			}
 		}
+		
 		System.out.println(maxArea);
 		
 		scanner.close();
