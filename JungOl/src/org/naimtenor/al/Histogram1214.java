@@ -1,5 +1,6 @@
 package org.naimtenor.al;
 
+import java.util.Arrays;
 import java.util.Scanner;
 
 /**
@@ -32,31 +33,50 @@ public class Histogram1214 {
 	public static void main(String[] args) {
 		Scanner scanner = new Scanner(System.in);
 		int size = scanner.nextInt();
-		
 		int[] heights = new int[size];
 		
-		for (int i = 0; i < size; i++) {
-			heights[i] = scanner.nextInt();
-		}
-		
 		long maxArea = 0L;
-		long tempMaxArea = 0L;
-		boolean init = true;
 		
-		for (int i = 0; i < size; i++) {
-			if (init) {
-				maxArea = maxArea < heights[i] ? heights[i] : maxArea;
-				tempMaxArea = heights[i];
-				init = false;
+		int value = 0;
+		int beforeValue = 0;
+		int max = 0;
+		
+		for(int i = 0 ; i < size ; i++) {
+			heights[i] = scanner.nextInt();
+			max = max < heights[i] ? heights[i] : max;
+		}
+		System.out.println(max);
+		int[] counts = new int[max];
+		Arrays.fill(counts, 0);
+		
+		for(int i = 0 ; i < size ; i++) {
+			value = heights[i];
+			if (i != 0) {
+				beforeValue = heights[i - 1];
+			}			
+			
+			if (value >= beforeValue) {
+				for (int j = 0 ; j < value ; j++) {
+					counts[j] += 1;
+				}
 			} else {
-				if (heights[i - 1] > heights[i]) {
-					maxArea = maxArea < tempMaxArea ? tempMaxArea : maxArea;
-					init = true;
-					tempMaxArea = 0L;
-				} else {
-					tempMaxArea += heights[i - 1];
+				for (int j = 0 ; j < beforeValue ; j++) {
+					if ( j < value) {
+						counts[j] += 1;
+					} else {
+						long area = counts[j] * (j + 1);
+						maxArea = maxArea < area ? area : maxArea;
+						counts[j] = 0;
+					}					
 				}
 			}
+			
+			beforeValue = value;
+		}
+		
+		for (int i = 0 ; i < counts.length ; i++) {
+			long area = counts[i] * (i + 1);
+			maxArea = maxArea < area ? area : maxArea;
 		}
 		
 		System.out.println(maxArea);
