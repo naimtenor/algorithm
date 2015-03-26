@@ -67,9 +67,9 @@ public class Mosaic1219 {
 		int paperQty = scanner.nextInt();
 		int spotQty = scanner.nextInt();
 		
-		int maxYLocation = 0;
-		int minXLocation = 0;
-		int maxXLocation = 0;
+		int maxYLocation = 1;
+		int minXLocation = 1;
+		int maxXLocation = 1;
 		
 		for (int i = 0 ; i < spotQty ; i++) {
 			int y = scanner.nextInt();
