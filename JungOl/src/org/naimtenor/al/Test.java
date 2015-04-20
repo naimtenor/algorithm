@@ -4,13 +4,13 @@ package org.naimtenor.al;
 public class Test {
 
 	public static void main(String[] args) {
-		int[] a = new int[3];
-		a[1] = 1;
+		int a = 'A';
+		int b = 'B';
+		int z = 'Z';
 		
+		int c = 65;
 		
-		for(int i : a) {
-			System.out.println(i);
-		}
+		System.out.println((char) c);
 	}
 
 }
